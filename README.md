@@ -88,7 +88,7 @@ schema_name  = "cdp_travel"      # ← 必要に応じて変更
 
 約80%が国内顧客（日本語氏名・+81電話番号・JP国コード）、約20%が海外顧客。
 
-### 分析的な傾向
+### ティア別傾向
 
 | 指標 | Platinum | Gold | Silver | Member |
 | --- | --- | --- | --- | --- |
@@ -96,7 +96,38 @@ schema_name  = "cdp_travel"      # ← 必要に応じて変更
 | ビジネスクラス率 | 60% | 30% | 11% | 2% |
 | 離反リスクスコア | 0.11 | 0.16 | 0.25 | 0.50 |
 
-サポートチケットの約40%が解決済み。FK整合性 100%（孤立レコードなし）。
+### 主要ディメンションの分布
+
+**travel_purpose**（9カテゴリ）
+
+| カテゴリ | 割合 |
+| --- | --- |
+| Business | ~30% |
+| Leisure | ~19% |
+| Mixed | ~11% |
+| Family Vacation | ~10% |
+| Weekend Getaway | ~10% |
+| Visiting Friends & Relatives | ~8% |
+| Honeymoon | ~5% |
+| Adventure | ~4% |
+| Special Event | ~3% |
+
+**home_airport**（NYC圏）
+
+| 空港 | 人数 |
+| --- | --- |
+| JFK | ~2,170 |
+| EWR | ~1,300 |
+| LGA | ~870 |
+
+**region_focus**: 欧州路線予約実績のあるユーザーは「国際」に偏りあり。  
+**marketing_consent_status**: 同意済み / 未同意 / 保留 の3値。  
+**欧州目的地**: LHR・CDG が主要。LIS（リスボン）便は存在しない（新路線想定）。
+
+### その他
+
+- サポートチケットの約40%が解決済み
+- FK整合性 100%（孤立レコードなし）
 
 ---
 
