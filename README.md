@@ -21,17 +21,18 @@ Customer Data Platform（CDP）デモ環境を Unity Catalog 上に構築する�
 ```
 databricks_demo_cdp_travel/
 ├── README.md               ← 本ファイル
-├── 00_config               ← 【唯一の編集対象】カタログ名・スキーマ名を設定
-├── 01_create_tables        ← DDL（空テーブル作成 + PK/FK + PIIタグ）
-├── 02_insert_data          ← _data/ の CSV をテーブルに投入
+├── 00_config               ← 【唯一の編集対象】カタログ名・スキーマ名を設定（直接実行不要）
+├── 01_create_tables        ← DDL + データ投入（これだけ Run All すれば完了）
 └── _data/
-    ├── customers.csv
-    ├── flight_activity.csv
-    ├── bookings.csv
-    ├── ancillary_purchases.csv
-    ├── app_sessions.csv
-    └── customer_support_tickets.csv
+    ├── customers.csv.gz
+    ├── flight_activity.csv.gz
+    ├── bookings.csv.gz
+    ├── ancillary_purchases.csv.gz
+    ├── app_sessions.csv.gz
+    └── customer_support_tickets.csv.gz
 ```
+
+> **ℹ️ CSV は gzip 圧縮済み**（合計 266MB → 60MB）。Spark が透過的に読み込むため、解凍作業は不要です。
 
 ---
 
@@ -46,13 +47,10 @@ catalog_name = "your_catalog"    # ← 変更
 schema_name  = "cdp_travel"      # ← 必要に応じて変更
 ```
 
-### 2. ノートブックを順番に実行
+### 2. `01_create_tables` を Run All
 
-```
-00_config         → カタログ・スキーマの USE 設定
-01_create_tables  → 6テーブルの DDL 実行 + PII タグ付与
-02_insert_data    → CSV データをテーブルに INSERT OVERWRITE
-```
+`01_create_tables` を開いて全セル実行するだけで完了です。  
+内部で `%run ./00_config` を呼び出すため、`00_config` を個別に実行する必要はありません。
 
 > **冪等性あり**: 何度実行しても同じ結果になります（INSERT OVERWRITE）。
 
@@ -74,12 +72,6 @@ schema_name  = "cdp_travel"      # ← 必要に応じて変更
 | 4 | ancillary_purchases | 119,452 | purchase_id | user_id → customers, booking_id → bookings | 付帯購入（手荷物・座席指定等） |
 | 5 | app_sessions | 312,230 | event_id | user_id → customers | アプリ/Web/Push イベントストリーム |
 | 6 | customer_support_tickets | 12,490 | ticket_id | user_id → customers | 顧客サポートケース |
-
-### Unity Catalog タグ
-
-| タグキー | 値 | 対象カラム |
-| --- | --- | --- |
-| is_pii | yes | customers.first_name, last_name, email, phone |
 
 ---
 
