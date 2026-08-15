@@ -1,7 +1,7 @@
 # databricks_demo_cdp_travel
 
-Customer Data Platform（CDP）デモ環境を Unity Catalog 上に構築するノートブック＋データセットです。  
-架空の航空会社「**DBX Airlines**」の顧客行動データを題材に、カスタマーレイクの分析基盤を再現します。
+CustomerLake デモ環境用のデータ準備キットです。  
+架空の航空会社「**DBX Airlines**」の顧客行動データを Unity Catalog 上にデモテーブルとして作成します。
 
 ---
 
