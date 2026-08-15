@@ -80,7 +80,7 @@ schema_name  = "cdp_travel"      # ← 必要に応じて変更
 | 区分 | フィールド例 | 理由 |
 | --- | --- | --- |
 | 日本語 | cabin、booking_channel、product_name、サポートチケット各種 | 業務画面・顧客対応で使われるデータ |
-| 英語 | flight_number、空港コード、fare_class、loyalty_tier | 国際標準・システムコード |
+| 英語 | flight_number、空港コード、fare_class、loyalty_tier、travel_purpose | 国際標準・システムコード |
 
 ### 顧客分布
 
@@ -133,7 +133,7 @@ schema_name  = "cdp_travel"      # ← 必要に応じて変更
 
 - CDP / カスタマーレイクのデモ・PoC
 - AI/BI ダッシュボードのプロトタイピング
-- Unity Catalog ガバナンス（PII タグ・ABAC）のデモ
+- Unity Catalog ガバナンス（PK/FK 制約・リネージ）のデモ
 - Genie Space / AI Query によるセルフサービス分析
 - セグメンテーション・離反予測モデルの学習データ
 
@@ -142,5 +142,5 @@ schema_name  = "cdp_travel"      # ← 必要に応じて変更
 ## 注意事項
 
 - PK/FK は Unity Catalog の **informational constraint**（非強制）として定義されています
-- `01_create_tables` は `CREATE TABLE IF NOT EXISTS` のため、既存テーブルを上書きしません。再作成する場合は事前に DROP してください
+- DDL は `CREATE OR REPLACE TABLE` のため、実行のたびにテーブルが再作成されます（DROP 不要）
 - CSV データはデモ用の合成データです。実データは含まれていません
